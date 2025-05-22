@@ -12,6 +12,8 @@ import {
   Res,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { PostDto } from 'src/users/dtos/Post.dto';
+import { ProfileDto } from 'src/users/dtos/Profile.dto';
 import { UserDto } from 'src/users/dtos/User.dto';
 import { UsersService } from 'src/users/services/users/users.service';
 
@@ -63,5 +65,18 @@ export class UsersController {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+
+  @Post(':id/profiles')
+  createUserProfile(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() profileDto: ProfileDto,
+  ) {
+    return this.userService.createUserProfile(id, profileDto);
+  }
+
+  @Post(':id/posts')
+  createPost(@Param('id', ParseIntPipe) id: number, @Body() postDto: PostDto) {
+    return this.userService.createPost(id, postDto);
   }
 }
